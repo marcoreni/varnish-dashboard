@@ -67,7 +67,7 @@
     });
 
     function getBackendHealth() {
-        app.multiGet(app.getEnabledServers(), '/backendjson', function(responses) {
+        app.multiGet(app.getEnabledServers(), '/backendjson/', function(responses) {
             var gbackends = {};
 
             responses.forEach(function(r) {
