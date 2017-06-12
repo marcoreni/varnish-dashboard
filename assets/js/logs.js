@@ -60,11 +60,11 @@
     });
 
     function getServerVersions() {
-        app.multiPost(app.getEnabledServers(), '/direct', 'banner', function(responses) {
+        app.multiGet(app.getEnabledServers(), '/version', function(responses) {
             var varnish_version = false, multiple_versions = false, version;
 
             responses.forEach(function(r) {
-                version = r.response.match(/varnish-([0-9]+\.[0-9]+)/i);
+                version = r.response.match(/([0-9]+)\.([0-9]+)\.([0-9]+)/i);
 
                 if (!varnish_version) {
                     varnish_version = version;

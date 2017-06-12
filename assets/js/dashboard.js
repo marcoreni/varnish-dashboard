@@ -67,23 +67,18 @@
     });
 
     function getBackendHealth() {
-        app.multiPost(app.getEnabledServers(), '/direct', 'backend.list', function(responses) {
+        app.multiGet(app.getEnabledServers(), '/backendjson', function(responses) {
             var gbackends = {};
 
             responses.forEach(function(r) {
-                var backends = r.response.split("\n");
-                backends.shift();
-
+                var backends = r.response.backends;
+                
                 for (var j = 0; j < backends.length; j++) {
-                    var backend = backends[j].split(/\s+/);
-                    var name = backend[0].match(/(.*?)\((.*?)\)/);
-
-                    gbackends[name[1]] = {
-                        name: name[1],
-                        config: name[2],
-                        refs: backend[1],
-                        admin: backend[2],
-                        probe: backend[3]
+                    var backend = backends[j];
+                    
+                    gbackends[j] = {
+                        name: backend.name,
+                        probe: backend.probe
                     };
                 }
             });
@@ -116,7 +111,7 @@
                 }
 
                 html += '<td>' + gbackends[idx].name + '</td>';
-                html += '<td>' + gbackends[idx].config + '</td>';
+                html += '<td>' + gbackends[idx].probe + '</td>';
                 html += '</tr>';
             }
 
@@ -128,7 +123,7 @@
             $('#dashboard-server-info').append(html);
 
             healthInterval = setTimeout(getBackendHealth, app.getConfig('update_freq'));
-        }, 'text')
+        })
     };
 
     function getServerStatus(server) {
