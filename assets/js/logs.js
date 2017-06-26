@@ -115,7 +115,7 @@
 
                 getServerLogs();
             }
-        });
+        }, 'text/plain');
     }
 
     function getServerLogs() {

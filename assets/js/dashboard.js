@@ -103,8 +103,9 @@
 
             for (var idx in gbackends) {
                 html += '<tr>';
-
-                if (gbackends[idx].probe.match(/^Healthy/i)) {
+                    
+                if (gbackends[idx].probe.match(/Healthy/i)) {
+                    
                     html += '<td><img src="assets/images/status-online.png" alt=""></td>';
                 } else {
                     html += '<td><img src="assets/images/status-busy.png" alt=""></td>';
